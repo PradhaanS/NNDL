@@ -1,3 +1,5 @@
+import numpy as np
+import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow.keras import layers, models
 from tensorflow.keras.datasets import mnist
@@ -30,3 +32,21 @@ model.fit(x_train, y_train, epochs=5, batch_size=64, validation_split=0.2)
 # Evaluate the model
 test_loss, test_acc = model.evaluate(x_test, y_test)
 print('Test accuracy:', test_acc)
+
+# Pick a random image from the test set
+random_index = np.random.randint(0, x_test.shape[0])
+random_image = x_test[random_index]
+random_label = np.argmax(y_test[random_index]) # True label
+
+# Reshape for prediction
+random_image = random_image.reshape(1, 28 * 28)
+
+# Make prediction
+predictions = model.predict(random_image)
+predicted_class = np.argmax(predictions)
+
+# Display the image
+plt.imshow(random_image.reshape(28, 28), cmap='gray')
+plt.title(f'True label: {random_label}, Predicted: {predicted_class}')
+plt.axis('off')
+plt.show()
