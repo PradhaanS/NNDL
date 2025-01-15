@@ -1,13 +1,16 @@
-import numpy as np
+pip install datasets
+
+from datasets import load_dataset
+import tensorflow as tf
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import LSTM, Dense, Embedding
+from tensorflow.keras.layers import Embedding, LSTM, Dense
 from tensorflow.keras.optimizers import Adam
 
 # Load the dataset
-with open("LSTM.txt", 'r', encoding='utf-8') as f:
-    text_data = f.read().lower()
+dataset = load_dataset("wikitext", "wikitext-2-raw-v1")
+text_data = "\n".join(dataset["train"]["text"][:1000])
 
 # Tokenize the text
 tokenizer = Tokenizer()
